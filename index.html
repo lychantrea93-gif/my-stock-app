@@ -1,55 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f4f7f6; }
-      h2 { color: #2c3e50; text-align: center; }
-      table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-      th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
-      th { background-color: #3498db; color: white; }
-      tr:hover { background-color: #f1f1f1; }
-      .loading { text-align: center; color: #7f8c8d; margin-top: 20px; }
-    </style>
-  </head>
-  <body>
-    <h2>📊 តារាងទិន្នន័យស្តុក</h2>
-    <div id="content">
-      <p class="loading">កំពុងទាញទិន្នន័យ...</p>
+<head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <h1 class="text-xl font-bold mb-4 text-center">ប្រព័ន្ធគ្រប់គ្រងស្តុក</h1>
+    <div id="stock-list" class="space-y-2">
+        <p class="text-center">កំពុងទាញទិន្នន័យ...</p>
     </div>
 
     <script>
-      // មុខងារទាញទិន្នន័យពី Apps Script មកបង្ហាញលើ HTML
-      window.onload = function() {
-        google.script.run.withSuccessHandler(showData).getStockDataForWeb();
-      };
+        const API_URL = "https://script.google.com/macros/s/AKfycbx4Q4vyXoFyt9wAnHJtJuc9pxS-DNL0DXXwKltLCNM3XISE_j4tOfRO4kcEtct12qmS/exec";
 
-      function showData(data) {
-        if (!data || data.length == 0) {
-          document.getElementById('content').innerHTML = "មិនមានទិន្នន័យទេ។";
-          return;
+        async function loadStock() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                const container = document.getElementById('stock-list');
+                container.innerHTML = "";
+
+                data.forEach(item => {
+                    container.innerHTML += `
+                        <div class="bg-white p-4 rounded-lg shadow flex justify-between">
+                            <div>
+                                <p class="font-bold">${item.ItemName}</p>
+                                <p class="text-sm text-gray-500">តម្លៃ: $${item.Price}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-blue-600 font-bold">${item.Quantity}</p>
+                                <p class="text-xs text-gray-400">ក្នុងស្តុក</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                document.getElementById('stock-list').innerHTML = "មានបញ្ហាពេលទាញទិន្នន័យ!";
+            }
         }
 
-        let html = '<table><thead><tr>';
-        // បង្កើត Header
-        data[0].forEach(header => {
-          html += '<th>' + header + '</th>';
-        });
-        html += '</tr></thead><tbody>';
-
-        // បង្កើតជួរទិន្នន័យ
-        for (let i = 1; i < data.length; i++) {
-          html += '<tr>';
-          data[i].forEach(cell => {
-            html += '<td>' + cell + '</td>';
-          });
-          html += '</tr>';
-        }
-        html += '</tbody></table>';
-        document.getElementById('content').innerHTML = html;
-      }
+        window.onload = loadStock;
     </script>
-  </body>
+</body>
 </html>
