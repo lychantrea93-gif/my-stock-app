@@ -9,6 +9,7 @@
     <style>
         body { 
             font-family: 'Kantumruy Pro', sans-serif; 
+            /* រក្សារូបភាពខាងក្រោយដដែល */
             background-image: url('https://i.pinimg.com/736x/3b/64/77/3b6477bdeda5399ac3075cc8a9bd690e.jpg'); 
             background-size: cover;
             background-position: center;
@@ -17,7 +18,8 @@
             padding: 15px;
         }
         .overlay-bg {
-            background-color: rgba(255, 255, 255, 0.85);
+            /* ប្តូរផ្ទៃខាងមុខធំឱ្យមានពណ៌ថ្លាបន្តិច ដើម្បីឱ្យលេចបន្ទះ Item ពណ៌លឿង */
+            background-color: rgba(255, 255, 255, 0.4); 
             border-radius: 15px;
             padding: 20px;
             min-height: 90vh;
@@ -47,7 +49,7 @@
                     container.innerHTML += `
                         <div class="bg-yellow-100 p-3 rounded-xl shadow-sm border border-yellow-200 flex items-center space-x-4">
                             <img src="${item.ItemImage || 'https://via.placeholder.com/80'}" 
-                                 class="w-20 h-20 object-cover rounded-lg border border-gray-100">
+                                 class="w-20 h-20 object-cover rounded-lg border border-yellow-200 shadow-sm">
                             
                             <div class="flex-1">
                                 <p class="text-lg font-bold text-gray-800 leading-tight">${item.ItemName || 'មិនមានឈ្មោះ'}</p>
