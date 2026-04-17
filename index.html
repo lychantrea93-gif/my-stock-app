@@ -9,7 +9,6 @@
     <style>
         body { 
             font-family: 'Kantumruy Pro', sans-serif; 
-            /* កែត្រង់នេះ៖ ត្រូវមានពាក្យ url('...') ព័ទ្ធជុំវិញ Link រូបភាព */
             background-image: url('https://i.pinimg.com/736x/3b/64/77/3b6477bdeda5399ac3075cc8a9bd690e.jpg'); 
             background-size: cover;
             background-position: center;
@@ -46,7 +45,7 @@
 
                 data.forEach(item => {
                     container.innerHTML += `
-                        <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 flex items-center space-x-4">
+                        <div class="bg-yellow-100 p-3 rounded-xl shadow-sm border border-yellow-200 flex items-center space-x-4">
                             <img src="${item.ItemImage || 'https://via.placeholder.com/80'}" 
                                  class="w-20 h-20 object-cover rounded-lg border border-gray-100">
                             
@@ -56,7 +55,7 @@
                                 <p class="text-xs text-gray-400 mt-1">កូដ: ${item.ID || 'N/A'}</p>
                             </div>
 
-                            <div class="text-right border-l pl-4">
+                            <div class="text-right border-l border-yellow-300 pl-4">
                                 <p class="text-2xl font-black text-blue-700">${item.Quantity || '0'}</p>
                                 <p class="text-[10px] text-gray-400 uppercase font-bold">ក្នុងស្តុក</p>
                             </div>
@@ -65,7 +64,7 @@
                 });
             } catch (error) {
                 document.getElementById('stock-container').innerHTML = 
-                    "<div class='bg-red-100 text-red-600 p-4 rounded-lg text-center'>មានកំហុសក្នុងការទាញទិន្នន័យ! សូមពិនិត្យ Webhook ឬ Deployment URL។</div>";
+                    "<div class='bg-red-100 text-red-600 p-4 rounded-lg text-center'>មានកំហុសក្នុងការទាញទិន្នន័យ!</div>";
             }
         }
         window.onload = loadStock;
