@@ -6,16 +6,35 @@
     <title>ប្រព័ន្ធគ្រប់គ្រងស្តុក</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Kantumruy Pro', sans-serif; }</style>
+    <style>
+        body { 
+            font-family: 'Kantumruy Pro', sans-serif; 
+            /* កែត្រង់នេះ៖ ត្រូវមានពាក្យ url('...') ព័ទ្ធជុំវិញ Link រូបភាព */
+            background-image: url('https://i.pinimg.com/736x/7c/ae/69/7cae6969f7ae437b09cfe7d3f5555d40.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 15px;
+        }
+        .overlay-bg {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 90vh;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">ស្តុកទំនិញបច្ចុប្បន្ន</h1>
-    <div id="stock-container" class="space-y-4">
-        <p class="text-center text-gray-500">កំពុងទាញទិន្នន័យ...</p>
+<body class="bg-gray-100">
+    <div class="overlay-bg shadow-lg">
+        <h1 class="text-2xl font-bold text-center text-blue-700 mb-6">📦 ស្តុកទំនិញបច្ចុប្បន្ន</h1>
+        
+        <div id="stock-container" class="space-y-4">
+            <p class="text-center text-gray-500">កំពុងទាញទិន្នន័យ...</p>
+        </div>
     </div>
 
     <script>
-        // យក URL ថ្មីដែលទើបតែ Deploy ពីជំហានទី១ មកដាក់ទីនេះ
         const API_URL = "https://script.google.com/macros/s/AKfycbxdgwP5vijX2sf3O7tDP6dslkLs5GrDfCdRmWY8pInoCrAGeoAqwbLMkZvSBKtgfNAf/exec";
 
         async function loadStock() {
@@ -27,20 +46,26 @@
 
                 data.forEach(item => {
                     container.innerHTML += `
-                        <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-500 flex justify-between items-center">
-                            <div>
-                                <p class="text-lg font-bold text-gray-800">${item.ItemName || 'មិនមានឈ្មោះ'}</p>
-                                <p class="text-sm text-gray-500">តម្លៃ: $${item.Price || '0'}</p>
+                        <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 flex items-center space-x-4">
+                            <img src="${item.ItemImage || 'https://via.placeholder.com/80'}" 
+                                 class="w-20 h-20 object-cover rounded-lg border border-gray-100">
+                            
+                            <div class="flex-1">
+                                <p class="text-lg font-bold text-gray-800 leading-tight">${item.ItemName || 'មិនមានឈ្មោះ'}</p>
+                                <p class="text-md text-blue-600 font-semibold mt-1">តម្លៃ: $${item.Price || '0'}</p>
+                                <p class="text-xs text-gray-400 mt-1">កូដ: ${item.ID || 'N/A'}</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-2xl font-bold text-blue-600">${item.Quantity || '0'}</p>
-                                <p class="text-xs text-gray-400 uppercase">ចំនួនក្នុងស្តុក</p>
+
+                            <div class="text-right border-l pl-4">
+                                <p class="text-2xl font-black text-blue-700">${item.Quantity || '0'}</p>
+                                <p class="text-[10px] text-gray-400 uppercase font-bold">ក្នុងស្តុក</p>
                             </div>
                         </div>
                     `;
                 });
             } catch (error) {
-                document.getElementById('stock-container').innerHTML = "<p class='text-red-500 text-center'>មានកំហុសក្នុងការទាញទិន្នន័យ!</p>";
+                document.getElementById('stock-container').innerHTML = 
+                    "<div class='bg-red-100 text-red-600 p-4 rounded-lg text-center'>មានកំហុសក្នុងការទាញទិន្នន័យ! សូមពិនិត្យ Webhook ឬ Deployment URL។</div>";
             }
         }
         window.onload = loadStock;
