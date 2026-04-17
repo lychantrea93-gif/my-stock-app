@@ -1,45 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 p-4">
-    <h1 class="text-xl font-bold mb-4 text-center">ប្រព័ន្ធគ្រប់គ្រងស្តុក</h1>
-    <div id="stock-list" class="space-y-2">
-        <p class="text-center">កំពុងទាញទិន្នន័យ...</p>
-    </div>
+// យក URL ថ្មីដែលទើបតែ Deploy មកដាក់ទីនេះ
+const API_URL = "https://script.google.com/macros/s/AKfycbyVtnpwm5sy_YFsjonsofuLjgJ1ZO1Y73wej-vX_dA3InVtJZN4-pCQX8QmzNarNh0/exec"; 
 
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbx4Q4vyXoFyt9wAnHJtJuc9pxS-DNL0DXXwKltLCNM3XISE_j4tOfRO4kcEtct12qmS/exec";
-
-        async function loadStock() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                const container = document.getElementById('stock-list');
-                container.innerHTML = "";
-
-                data.forEach(item => {
-                    container.innerHTML += `
-                        <div class="bg-white p-4 rounded-lg shadow flex justify-between">
-                            <div>
-                                <p class="font-bold">${item.ItemName}</p>
-                                <p class="text-sm text-gray-500">តម្លៃ: $${item.Price}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-blue-600 font-bold">${item.Quantity}</p>
-                                <p class="text-xs text-gray-400">ក្នុងស្តុក</p>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                document.getElementById('stock-list').innerHTML = "មានបញ្ហាពេលទាញទិន្នន័យ!";
-            }
-        }
-
-        window.onload = loadStock;
-    </script>
-</body>
-</html>
+async function loadStock() {
+    try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        // ... កូដបង្ហាញទិន្នន័យផ្សេងទៀតរបស់អ្នក ...
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
